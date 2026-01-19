@@ -1,17 +1,15 @@
-// Very simple, "beginner" looking drawing code
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
 
 const W = canvas.width;
 const H = canvas.height;
 
-// background: plain sky and simple snow
+// background
 ctx.fillStyle = '#345ea8';
 ctx.fillRect(0, 0, W, H);
 ctx.fillStyle = '#ffffff';
 ctx.fillRect(0, H - 120, W, 120);
 
-// draw a very simple tree (three green triangles and a brown trunk)
 function drawTreeSimple(x, baseY) {
   // trunk
   ctx.fillStyle = '#8b5a2b';
@@ -40,16 +38,15 @@ function drawTreeSimple(x, baseY) {
   ctx.closePath();
   ctx.fill();
 
-  // simple star: yellow circle (beginner would cheat)
+  // simple star
   ctx.fillStyle = '#ffd700';
   ctx.beginPath();
   ctx.arc(x, baseY - 130, 10, 0, Math.PI * 2);
   ctx.fill();
 
-  // 8 simple baubles: sample positions inside the green triangles so
-  // ornaments always appear on the green tree only
+
+  // ornaments
   function samplePointInTri(ax, ay, bx, by, cx2, cy2) {
-    // barycentric sampling
     let r1 = Math.random();
     let r2 = Math.random();
     if (r1 + r2 >= 1) {
@@ -76,13 +73,13 @@ function drawTreeSimple(x, baseY) {
   }
 }
 
-// simple house function
+//house 
 function drawHouseSimple(x, baseY, w, h, wall, roof, lit) {
   // wall
   ctx.fillStyle = wall;
   ctx.fillRect(x, baseY - h, w, h);
 
-  // roof: simple triangle
+  // roof
   ctx.fillStyle = roof;
   ctx.beginPath();
   ctx.moveTo(x - 5, baseY - h);
@@ -91,18 +88,18 @@ function drawHouseSimple(x, baseY, w, h, wall, roof, lit) {
   ctx.closePath();
   ctx.fill();
 
-  // door (just rectangle)
+  // door
   ctx.fillStyle = '#5a3416';
   ctx.fillRect(x + w / 2 - 10, baseY - 30, 20, 30);
 
-  // windows (simple squares). If `lit` is true, show warm light.
+  // windows
   const windowColor = lit ? '#fff1a0' : '#aee7ff';
-  ctx.fillStyle = windowColor;
+  ctx.fillStyle = windowColor;  
   ctx.fillRect(x + 10, baseY - h + 10, 20, 20);
   ctx.fillRect(x + w - 30, baseY - h + 10, 20, 20);
 }
 
-// draw 4 houses at random non-overlapping positions and sizes
+//4 houses 
 const baseHouseW = 100;
 const baseHouseH = 70;
 const houseCount = 4;
@@ -111,7 +108,6 @@ const placed = [];
 const wallColors = ['#f5d0a9','#ffd2e0','#d0f0d0','#f2f2b0'];
 const roofColors = ['#8b0000','#6b4226','#2f4f4f','#8b2500'];
 
-// approximate tree box to keep houses away
 const treeX = W - 120;
 const treeBox = { left: treeX - 70, right: treeX + 70, top: baseY - 140, bottom: baseY };
 
@@ -119,7 +115,7 @@ function rectsOverlap(a, b) {
   return !(a.right <= b.left || a.left >= b.right || a.bottom <= b.top || a.top >= b.bottom);
 }
 
-// determine if window lights should be on (local time >= 18:00)
+//Lights
 const now = new Date();
 const lightsOn = now.getHours() >= 18;
 
@@ -128,17 +124,17 @@ for (let i = 0; i < houseCount; i++) {
   let tries = 0;
   while (!placedOk && tries < 500) {
     tries++;
-    const w = baseHouseW * (0.85 + Math.random() * 0.3); // 85%..115%
+    const w = baseHouseW * (0.85 + Math.random() * 0.3); 
     const h = baseHouseH * (0.85 + Math.random() * 0.3);
     const margin = 10;
     const x = margin + Math.random() * (W - margin - w - 20);
     const y = baseY;
     const box = { left: x, right: x + w, top: y - h, bottom: y };
 
-    // avoid tree
+    // avoid 
     if (rectsOverlap(box, treeBox)) continue;
 
-    // avoid overlap with previously placed houses
+    // avoid overlap
     let collision = false;
     for (const p of placed) {
       if (rectsOverlap(box, p.box)) { collision = true; break; }
@@ -154,26 +150,24 @@ for (let i = 0; i < houseCount; i++) {
   }
 
   if (!placedOk) {
-    // fallback: place sequentially on the left side
     const fx = 20 + i * (baseHouseW + 10);
     drawHouseSimple(fx, baseY, baseHouseW, baseHouseH, wallColors[i % wallColors.length], roofColors[i % roofColors.length], lightsOn);
     placed.push({ box: { left: fx, right: fx + baseHouseW, top: baseY - baseHouseH, bottom: baseY } });
   }
 }
 
-// draw one simple tree (moved almost to the right)
+// tree to the right
 drawTreeSimple(W - 120, baseY);
 
-// beginner text style
+// text
 ctx.fillStyle = '#ffffff';
 ctx.font = '40px Comic Sans MS, sans-serif';
 ctx.fillText('Fijne Kerst!', 275, 70);
 
-// some sloppy snow dots (random)
+// snow doys
 for (let i = 0; i < 80; i++) {
   ctx.fillStyle = '#fff';
   const sx = Math.random() * W;
   const sy = Math.random() * (H - 120);
   ctx.fillRect(sx, sy, 3, 3);
 }
-// finished drawing
