@@ -1,76 +1,76 @@
-// array met verschillende dingen
+//array verschill
 let arr = [10, "appel", true, 5.5, { naam: "Pikachu" }];
 console.log(arr);
 
-// length
+//length
 console.log(arr.length);
 
-// toString
+//toString
 console.log(arr.toString());
 
-// at
+//at
 console.log(arr.at(1));
 
-// join
+//join
 console.log(arr.join(" | "));
 
-// pop
+//pop
 arr.pop();
 console.log(arr);
 
-// push
+//push
 arr.push("nieuw");
 console.log(arr);
 
-// shift
+//shift
 arr.shift();
 console.log(arr);
 
-// unshift
+//unshift
 arr.unshift(99);
 console.log(arr);
 
-// delete
+//delete
 delete arr[1];
 console.log(arr);
 
-// concat
+//concat
 let extra = ["extra", false];
 console.log(arr.concat(extra));
 
-// copyWithin
+//copyWith
 arr.copyWithin(0, 1);
 console.log(arr);
 
-// flat
+//flat
 let nested = [1, [2, [3, 4]]];
 console.log(nested.flat(2));
 
-// splice
+//splice
 arr.splice(1, 1, "vervangen");
 console.log(arr);
 
-// toSpliced
+//toSplice
 let nieuw = arr.toSpliced(1, 1, "nieuwItem");
 console.log(nieuw);
 
-// slice
+//slice
 console.log(arr.slice(1, 3));
 
-// indexOf
+//indexOf
 console.log(arr.indexOf("nieuw"));
 
-// lastIndexOf
+//lastIndexOf
 console.log(arr.lastIndexOf("nieuw"));
 
-// includes
+//includes
 console.log(arr.includes(true));
 
-// sort
+//sort
 let nums = [3, 1, 5, 2];
 nums.sort();
 console.log(nums);
 
-// reverse
+//reverse
 nums.reverse();
 console.log(nums);
